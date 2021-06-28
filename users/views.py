@@ -29,6 +29,7 @@ class CreateUserView(CreateAPIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
+            #make a user active by default
             user.is_active = True
             user.save()
             return Response(serializer.data)
