@@ -48,7 +48,7 @@ class TodoTestCase(TestCase):
             "description":"test"
         }
         self.response = self.client.post(
-            reverse('create_todo', kwargs={'user_pk': self.user.email}),
+            reverse('create-todo', kwargs={'user_pk': self.user.email}),
             self.todo_data,
             format="json"
         )
@@ -57,7 +57,7 @@ class TodoTestCase(TestCase):
         #Test that the api has user authorization.
         new_client = APIClient()
         response = new_client.get(
-            reverse('create_todo', kwargs={'user_pk': self.user.email}),
+            reverse('create-todo', kwargs={'user_pk': self.user.email}),
             self.todo_data,
             format="json"
         )
@@ -70,7 +70,7 @@ class TodoTestCase(TestCase):
     def test_todo_api_can_get_user_todos(self):
         #test that the todo api can get a user's todos
         response = self.client.get(
-            reverse('get_user_todos', kwargs={'user_pk': self.user.email}),
+            reverse('get-user-todos', kwargs={'user_pk': self.user.email}),
             format="json"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -99,14 +99,14 @@ class TodoDetailTestCase(TestCase):
         #Test that the api has user authorization.
         new_client = APIClient()
         response = new_client.get(
-            reverse('get_todo_detail', kwargs={'user_pk': self.user.email, 'todo_pk':self.todo.code}),
+            reverse('get-todo-detail', kwargs={'user_pk': self.user.email, 'todo_pk':self.todo.code}),
             format="json"
         )
         self.assertEqual(response.status_code, 401)
     
     def test_api_can_return_todo_detail(self):
         response = self.client.get(
-            reverse('get_todo_detail', kwargs={'user_pk': self.user.email, 'todo_pk':self.todo.code}),
+            reverse('get-todo-detail', kwargs={'user_pk': self.user.email, 'todo_pk':self.todo.code}),
             format="json"
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -116,7 +116,7 @@ class TodoDetailTestCase(TestCase):
             "description" : "Test"
         }
         response = self.client.put(
-            reverse('update_todo_detail', kwargs={'user_pk': self.user.email, 'todo_pk':self.todo.code}),
+            reverse('update-todo-detail', kwargs={'user_pk': self.user.email, 'todo_pk':self.todo.code}),
             changed_todo, 
             format='json'
         )
@@ -124,7 +124,7 @@ class TodoDetailTestCase(TestCase):
 
     def test_api_can_delete_todo(self):
         response = self.client.delete(
-            reverse('delete_todo_detail', kwargs={'user_pk': self.user.email, 'todo_pk':self.todo.code}),
+            reverse('delete-todo-detail', kwargs={'user_pk': self.user.email, 'todo_pk':self.todo.code}),
             format='json'
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
