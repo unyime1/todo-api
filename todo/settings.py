@@ -78,12 +78,15 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     #allowed domains
+    #test domains
     'http://localhost:4200',
     'http://localhost:4000',
     "http://127.0.0.1:4200",
     "http://127.0.0.1:4000",
-    'http://anydomain.com'
+    #production domain
+    'http://yourdomain.com'
 ]
+AUTH_USER_MODEL = 'users.CustomUser'
 
 ROOT_URLCONF = 'todo.urls'
 

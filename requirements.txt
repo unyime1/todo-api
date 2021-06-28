@@ -1,7 +1,16 @@
 asgiref==3.4.0
+boto3==1.17.101
+botocore==1.20.101
 Django==3.2.4
 django-cors-headers==3.7.0
+django-ses==2.0.0
 djangorestframework==3.12.4
+future==0.18.2
+jmespath==0.10.0
+python-dateutil==2.8.1
 python-dotenv==0.18.0
 pytz==2021.1
+s3transfer==0.4.2
+six==1.16.0
 sqlparse==0.4.1
+urllib3==1.26.6
