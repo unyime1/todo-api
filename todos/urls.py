@@ -12,7 +12,7 @@ urlpatterns = format_suffix_patterns([
     path('todo/<str:user_pk>/<str:todo_pk>/update/', views.UpdateTodoDetailView().as_view(), name="update-todo-detail"),
     path('todo/<str:user_pk>/<str:todo_pk>/delete/', views.DeleteTodoDetailView().as_view(), name="delete-todo-detail"),
 
-    #extra/alternative code
+    #extra/alternative api endpoints
 
     path('todo/', views.TodoView().as_view(), name="todo"),
     path('todo-detail/<str:pk>/', views.TodoDetailView().as_view(), name="todo-detail"),

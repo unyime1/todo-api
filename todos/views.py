@@ -21,10 +21,8 @@ class CreateTodoView(APIView):
         user = get_object_or_404(CustomUser, email=user_pk)
         serializer = TodoSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
-            todo = serializer.save()
-            todo.code = uuid.uuid4()
-            todo.user = user
-            todo.save()
+            code = uuid.uuid4()
+            serializer.save(code=code, user=user)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
