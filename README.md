@@ -18,6 +18,12 @@ todo/<str:user_pk>/<str:todo_pk>/delete #delete a todo (delete request)
 ### Alternative Endpoints
 todo/ #create todo(post request), get todo(get request)
 todo-detail/<str:pk>/ #get todo detail(#get request), update a todo(put request), delete a todo(delete request) 
+
+#Note that: 
+# <str:user_pk> represents a user's email address
+# <str:todo_pk> represents a todo's unique code
+#<str:pk> represents a todo's unique code
+
 ``` 
 
 ## Installation
