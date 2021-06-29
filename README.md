@@ -28,6 +28,14 @@ pip install -r requirements.txt
 python manage.py runserver
 ```
 
+## Run with docker
+Build and run this container with
+```bash
+docker build --tag python-todo-api .
+docker run --publish 8000:8000 python-todo-api
+```
+
+
 ## Run Tests
 Run tests with
 ```bash
