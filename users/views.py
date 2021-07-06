@@ -38,8 +38,11 @@ class CreateUserView(CreateAPIView):
 
 class LoginView(APIView):
     """Handle app logins"""
+    model = get_user_model()
+    serializer_class = LoginSerializer
+
     def post(self, request, format=None): 
-        serializer = LoginSerializer(data=request.data, context={'request': request})
+        serializer = self.serializer_class(data=request.data, context={'request': request})
         
         if serializer.is_valid():
             email = serializer.validated_data['email']
@@ -51,4 +54,6 @@ class LoginView(APIView):
                 'last_name': user.last_name,
                 'token': token.key,
             })
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    

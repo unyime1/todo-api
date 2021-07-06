@@ -80,4 +80,8 @@ class LoginSerializer(serializers.Serializer):
         attrs['user'] = user
         return attrs 
 
+    class Meta:
+        model = UserModel
+        fields = ['email', 'password']
+
 
