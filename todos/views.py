@@ -15,11 +15,13 @@ from users.models import *
 class CreateTodoView(APIView):
     """Handle todo creation"""
     permission_classes = [IsAuthenticated]
+    model = Todo
+    serializer_class = TodoSerializer
 
     def post(self, request, user_pk, format=None):
         #create todo
         user = get_object_or_404(CustomUser, email=user_pk)
-        serializer = TodoSerializer(data=request.data, context={'request': request})
+        serializer = self.serializer_class(data=request.data, context={'request': request})
         if serializer.is_valid():
             code = uuid.uuid4()
             serializer.save(code=code, user=user)
@@ -30,12 +32,13 @@ class CreateTodoView(APIView):
 class GetUserTodosView(APIView):
     """Handle todo retrieval"""
     permission_classes = [IsAuthenticated]
-
+    model = Todo
+    serializer_class = TodoGetSerializer
     def get(self, request, user_pk, format=None):
         #get todo
         user = get_object_or_404(CustomUser, email=user_pk)
         todos = Todo.objects.filter(user=user, delete=False).order_by("-date_created")
-        serializer = TodoGetSerializer(todos, many=True)
+        serializer = self.serializer_class(todos, many=True)
         #additional security check to ensure that requests are sent by resource owner
         if user == request.user:
             return Response(serializer.data)
@@ -45,13 +48,15 @@ class GetUserTodosView(APIView):
 class GetTodoDetailView(APIView):
     """Handle todo retrieval"""
     permission_classes = [IsAuthenticated]
+    model = Todo
+    serializer_class = TodoGetSerializer
 
     def get(self, request, user_pk, todo_pk, format=None):
         #get todo
         
         user = get_object_or_404(CustomUser, email=user_pk)
         todo = get_object_or_404(Todo, code=todo_pk, user=user, delete=False)
-        serializer = TodoGetSerializer(todo)
+        serializer = self.serializer_class(todo)
         #additional security check to ensure that requests are sent by resource owner
         if user == request.user:
             return Response(serializer.data)
@@ -62,12 +67,14 @@ class GetTodoDetailView(APIView):
 class UpdateTodoDetailView(APIView):
     """Handle todo update"""
     permission_classes = [IsAuthenticated]
+    model = Todo
+    serializer_class = TodoSerializer
 
     def put(self, request, user_pk, todo_pk, format=None):
         #update todo
         user = get_object_or_404(CustomUser, email=user_pk)
         todo = get_object_or_404(Todo, code=todo_pk, user=user, delete=False)
-        serializer = TodoSerializer(todo, data=request.data)
+        serializer = self.serializer_class(todo, data=request.data)
         #additional security check to ensure that requests are sent by resource owner
         if user == request.user:
             if serializer.is_valid():
@@ -115,6 +122,8 @@ class DeleteTodoDetailView(APIView):
 class TodoView(APIView):
     """handle the creation and retrieval of todo lists"""
     permission_classes = [IsAuthenticated]
+    model = Todo
+    serializer_class = TodoSerializer 
 
     def get(self, request, format=None):
         #get todo lists related to user sending the request
@@ -126,7 +135,7 @@ class TodoView(APIView):
     def post(self, request, format=None):
         #create todo list for user making the request
         user = request.user
-        serializer = TodoSerializer(data=request.data, context={'request': request})
+        serializer = self.serializer_class(data=request.data, context={'request': request})
         if serializer.is_valid():
             code = uuid.uuid4()
             serializer.save(code=code, user=user)
@@ -138,6 +147,8 @@ class TodoView(APIView):
 class TodoDetailView(APIView):
     """handle the retrieval, update and deletion of individual todo-lists"""
     permission_classes = [IsAuthenticated]
+    model = Todo
+    serializer_class = TodoSerializer 
     
     def get_todo(self, request, pk):
         #retrieve todo
@@ -154,7 +165,7 @@ class TodoDetailView(APIView):
     def put(self, request, pk, format=None):
         #update a specific todo
         todo = self.get_todo(request, pk)
-        serializer = TodoSerializer(todo, data=request.data, context={'request': request})
+        serializer = self.serializer_class(todo, data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

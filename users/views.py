@@ -24,7 +24,7 @@ class CreateUserView(CreateAPIView):
     """User Registration Class"""
     model = get_user_model()
     serializer_class = CreateUserSerializer
-
+ 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():

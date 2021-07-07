@@ -10,7 +10,7 @@ from .models import *
 
 class CreateUserSerializer(serializers.ModelSerializer):
     """User Serializer"""
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, style = {'input_type' : 'password' }, trim_whitespace = False)
     first_name = serializers.CharField()
     last_name = serializers.CharField()
     email = serializers.EmailField()
