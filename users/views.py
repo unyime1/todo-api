@@ -22,6 +22,7 @@ class HelloView(APIView):
 
 class CreateUserView(CreateAPIView): 
     """User Registration Class"""
+
     model = get_user_model()
     serializer_class = CreateUserSerializer
  
@@ -38,12 +39,12 @@ class CreateUserView(CreateAPIView):
 
 class LoginView(APIView):
     """Handle app logins"""
+
     model = get_user_model()
     serializer_class = LoginSerializer
 
     def post(self, request, format=None): 
-        serializer = self.serializer_class(data=request.data, context={'request': request})
-        
+        serializer = self.serializer_class(data=request.data, context={'request': request})  
         if serializer.is_valid():
             email = serializer.validated_data['email']
             user = get_object_or_404(CustomUser, email=email)

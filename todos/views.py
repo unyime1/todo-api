@@ -1,5 +1,6 @@
 """This module handles the users app views"""
 import uuid
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -14,6 +15,7 @@ from users.models import *
  
 class CreateTodoView(APIView):
     """Handle todo creation"""
+    
     permission_classes = [IsAuthenticated]
     model = Todo
     serializer_class = TodoSerializer
@@ -31,9 +33,11 @@ class CreateTodoView(APIView):
     
 class GetUserTodosView(APIView):
     """Handle todo retrieval"""
+
     permission_classes = [IsAuthenticated]
     model = Todo
     serializer_class = TodoGetSerializer
+
     def get(self, request, user_pk, format=None):
         #get todo
         user = get_object_or_404(CustomUser, email=user_pk)
@@ -47,6 +51,7 @@ class GetUserTodosView(APIView):
 
 class GetTodoDetailView(APIView):
     """Handle todo retrieval"""
+
     permission_classes = [IsAuthenticated]
     model = Todo
     serializer_class = TodoGetSerializer
@@ -66,6 +71,7 @@ class GetTodoDetailView(APIView):
 
 class UpdateTodoDetailView(APIView):
     """Handle todo update"""
+
     permission_classes = [IsAuthenticated]
     model = Todo
     serializer_class = TodoSerializer
@@ -87,6 +93,7 @@ class UpdateTodoDetailView(APIView):
 
 class DeleteTodoDetailView(APIView):
     """Handle todo deletion"""
+
     permission_classes = [IsAuthenticated]
 
     def delete(self, request, user_pk, todo_pk, format=None):
@@ -108,12 +115,10 @@ class DeleteTodoDetailView(APIView):
 """
     In a bid to reduce code size and avoid excessive repetitions, below is how I would normally 
     build a similar API. Since this is for demonstrative purposes only, accompanying unit tests 
-    will not be created. In the example below, only 2 endpoints are needed instead of 5. 
-    'todo/' handles the creation and retrieval of user's todolists with 'post' and 
-    'get' requests respectively, while the updates, deletions,
-    and detail retrievals are handled by 'todo_detail/' utilizing 'put', 'delete', and 'get'
+    will not be created. API views are needed instead of 5. TodoView handles the creation and 
+    retrieval of user's todo lists with POST and GET requests respectively, while TodoDetailView
+    handles the retrieval, update and deletion of individual todos with GET, PUT, and DELETE 
     requests respectively.
-
 """
 
 
@@ -121,6 +126,7 @@ class DeleteTodoDetailView(APIView):
 
 class TodoView(APIView):
     """handle the creation and retrieval of todo lists"""
+
     permission_classes = [IsAuthenticated]
     model = Todo
     serializer_class = TodoSerializer 
@@ -146,6 +152,7 @@ class TodoView(APIView):
 
 class TodoDetailView(APIView):
     """handle the retrieval, update and deletion of individual todo-lists"""
+
     permission_classes = [IsAuthenticated]
     model = Todo
     serializer_class = TodoSerializer 
@@ -180,3 +187,4 @@ class TodoDetailView(APIView):
         return Response(status=status.HTTP_200_OK)
 
     
+
