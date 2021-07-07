@@ -51,4 +51,4 @@ python manage.py test
 ## API Documentation
 To view this API's documentation, follow the following steps:
 1. Head over to [Swagger Editor](https://editor.swagger.io/), and click on the ```file``` option at the top right.
-2. Click on ```Import File```, and upload the 
+2. Click on ```Import File```, and upload the [this documentation file](https://github.com/unyime1/todo-api/blob/master/openapi.yaml) to get started.
