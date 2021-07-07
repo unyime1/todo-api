@@ -48,7 +48,7 @@ class LoginView(APIView):
             email = serializer.validated_data['email']
             user = get_object_or_404(CustomUser, email=email)
             token, created = Token.objects.get_or_create(user=user)
-            return Response({
+            return Response({ 
                 'email': user.email,
                 'first_name': user.first_name,
                 'last_name': user.last_name,

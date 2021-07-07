@@ -11,7 +11,7 @@ from .serializers import *
 from .models import *
 from users.models import *
 
-
+ 
 class CreateTodoView(APIView):
     """Handle todo creation"""
     permission_classes = [IsAuthenticated]

@@ -4,7 +4,7 @@ from rest_framework import serializers
 from .models import *
 from users.models import CustomUser
 
-
+ 
 class TodoSerializer(serializers.ModelSerializer):
     """serialize todo data"""
     title = serializers.CharField(max_length=650)
